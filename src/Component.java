@@ -58,8 +58,7 @@ public class Component {
 		 {
 			 return this.name;
 		 }
-<<<<<<< HEAD
-=======
+
 	 }else if(this.getType()=="Current")
 	 {
 		 if(this.name==null)
@@ -69,7 +68,7 @@ public class Component {
 		 {
 			 return this.name;
 		 }
->>>>>>> 4c715a3 (adding current sources)
+
 	 }else
 	 {
 		 return null;
@@ -192,10 +191,7 @@ public class Component {
   {
 	  return this.outElement;  
   }*/
-<<<<<<< HEAD
-=======
-  
->>>>>>> 4c715a3 (adding current sources)
+
   void kcl()
   {
 	  for(Component i:eqn)
@@ -203,7 +199,7 @@ public class Component {
 		  if(i.getConnection().getFirst()==this)
 		  {
 			 // System.out.println(i.getConnection().get(1).getType() +" entering "+ i.getResistance() + " "+ this.getIndex());
-<<<<<<< HEAD
+
 			   this.kvleqn[this.getIndex()]+=(1/i.getResistance()*-1);
 			   if(i.getConnection().getLast().getReference()==false)
 			   {
@@ -220,7 +216,7 @@ public class Component {
 					 //System.out.println("Sdfsdf "+i.getVoltage());
 					 this.setConstant(i.getVoltage()*-1,i.getResistance());
 				  }
-=======
+
 			   if(i.getCurrent()==0)			   {
 				   this.kvleqn[this.getIndex()]+=(1/i.getResistance()*-1);
 				   if(i.getConnection().getLast().getReference()==false)
@@ -242,12 +238,11 @@ public class Component {
 			   {
 				   this.setConstant(i.getCurrent()*-1,1);
 			   }
->>>>>>> 4c715a3 (adding current sources)
+
 			
 		  }else  
 		  {	  
-			  //System.out.println(i.getConnection().get(1).getType() +" leaving "+ i.getResistance()+ " "+ this.getIndex());
-<<<<<<< HEAD
+
 			  this.kvleqn[this.getIndex()]+=(1/i.getResistance()*-1);
 			  if(i.getConnection().getFirst().getVoltage()==0)
 			  {
@@ -262,7 +257,7 @@ public class Component {
 			  {
 				// System.out.println("Sdfsdf "+i.getVoltage());
 				 this.setConstant(i.getVoltage(),i.getResistance());
-=======
+
 			  if(i.getCurrent()==0)
 			  {
 				  this.kvleqn[this.getIndex()]+=(1/i.getResistance()*-1);
@@ -283,7 +278,7 @@ public class Component {
 			  }else
 			  {
 				  this.setConstant(i.getCurrent(),1);
->>>>>>> 4c715a3 (adding current sources)
+
 			  }
 		  }
 		  
@@ -293,4 +288,5 @@ public class Component {
 	  
   }
   
-}
+  }
+  }
