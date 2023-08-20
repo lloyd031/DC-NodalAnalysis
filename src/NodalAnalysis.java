@@ -65,11 +65,8 @@ public class NodalAnalysis {
 	{
 				for(Component i: branchlist)
 						{
-<<<<<<< HEAD
-					solveVR(i.getConnection().getLast(),null,i);	
-=======
+
 					solveVRI(i.getConnection().getLast(),null,i);	
->>>>>>> 4c715a3 (adding current sources)
 				}
 	}
 	//if a branch has only voltage source and is connected to ground, the node voltage will be equal to the branch voltage
@@ -222,24 +219,18 @@ public class NodalAnalysis {
 					}
 				}
 	}
-<<<<<<< HEAD
-	// method for solving the total resistance and voltages for each branch
-	 void solveVR(Component element, Component prev, Component branch)
-=======
+
 	// method for solving the total resistance and voltages and current for each branch
 	 void solveVRI(Component element, Component prev, Component branch)
->>>>>>> 4c715a3 (adding current sources)
+
 	{
 		
 		if(element.getType().equals("Resistor"))
 		{
 			branch.setResistance(branch.getResistance()+element.getResistance());
 			
-<<<<<<< HEAD
-		}else if(element.getType().equals("V-source"))
-=======
+
 		}else if(element.getType().equals("Voltage"))
->>>>>>> 4c715a3 (adding current sources)
 		{
 			if(element.getTail().equals(prev))
 			{
@@ -248,11 +239,8 @@ public class NodalAnalysis {
 			{
 				branch.setVoltage(branch.getVoltage()-element.getVoltage());
 			}
-<<<<<<< HEAD
-		}else if(element.getType().equals("Current-source"))
-=======
+
 		}else if(element.getType().equals("Current"))
->>>>>>> 4c715a3 (adding current sources)
 		{
 			if(branch.getCurrent()==0)
 			{
@@ -276,11 +264,8 @@ public class NodalAnalysis {
 				
 				if(i!=prev && branch.getConnection().contains(i))
 				{
-<<<<<<< HEAD
-					solveVR(i,element,branch);
-=======
+
 					solveVRI(i,element,branch);
->>>>>>> 4c715a3 (adding current sources)
 				}
 			}
 		}
@@ -290,8 +275,5 @@ public class NodalAnalysis {
 	
 	
 	
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 4c715a3 (adding current sources)

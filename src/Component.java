@@ -200,24 +200,10 @@ public class Component {
 		  {
 			 // System.out.println(i.getConnection().get(1).getType() +" entering "+ i.getResistance() + " "+ this.getIndex());
 
-			   this.kvleqn[this.getIndex()]+=(1/i.getResistance()*-1);
-			   if(i.getConnection().getLast().getReference()==false)
-			   {
-				 if(i.getConnection().getLast().getVoltage()==0)
-				 {
-					 this.kvleqn[i.getConnection().getLast().getIndex()]+=1/i.getResistance();
-				 }else 
-				 {
-					 this.setConstant(i.getConnection().getLast().getVoltage()*-1,i.getResistance());
-				 }
-			   }
-			   if(i.getVoltage()!=0 && i.getResistance()!=0)
-				  {
-					 //System.out.println("Sdfsdf "+i.getVoltage());
-					 this.setConstant(i.getVoltage()*-1,i.getResistance());
-				  }
+			   
 
-			   if(i.getCurrent()==0)			   {
+			   if(i.getCurrent()==0)			  
+			   {
 				   this.kvleqn[this.getIndex()]+=(1/i.getResistance()*-1);
 				   if(i.getConnection().getLast().getReference()==false)
 				   {
@@ -243,21 +229,7 @@ public class Component {
 		  }else  
 		  {	  
 
-			  this.kvleqn[this.getIndex()]+=(1/i.getResistance()*-1);
-			  if(i.getConnection().getFirst().getVoltage()==0)
-			  {
-				  this.kvleqn[i.getConnection().getFirst().getIndex()]+=1/i.getResistance();
-			  }else
-			  {
-				  this.setConstant(i.getConnection().getFirst().getVoltage()*-1,i.getResistance());
-				 
-			  }
 			  
-			  if(i.getVoltage()!=0 && i.getResistance()!=0)
-			  {
-				// System.out.println("Sdfsdf "+i.getVoltage());
-				 this.setConstant(i.getVoltage(),i.getResistance());
-
 			  if(i.getCurrent()==0)
 			  {
 				  this.kvleqn[this.getIndex()]+=(1/i.getResistance()*-1);
@@ -280,7 +252,7 @@ public class Component {
 				  this.setConstant(i.getCurrent(),1);
 
 			  }
-		  }
+		  
 		  
 		  
 		 

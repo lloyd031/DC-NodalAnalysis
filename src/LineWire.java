@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-import java.util.HashMap;
-=======
 
->>>>>>> 4c715a3 (adding current sources)
+
 import java.util.LinkedList;
 import java.util.Queue;
 

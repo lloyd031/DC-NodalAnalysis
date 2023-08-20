@@ -57,11 +57,8 @@ public class WorkspaceGUI extends JFrame {
     	 this.add(voltBtn);
     	 VoltageClick voltageclick=new VoltageClick();
     	 voltBtn.addMouseListener(voltageclick);
-<<<<<<< HEAD
-    	 JButton currBtn=new JButton("start");
-=======
+
     	 JButton currBtn=new JButton("current source");
->>>>>>> 4c715a3 (adding current sources)
     	 currBtn.setLocation(130,650);
     	 currBtn.setSize(130, 25);
     	 CurrentClick currClick=new CurrentClick();
@@ -79,15 +76,12 @@ public class WorkspaceGUI extends JFrame {
     	 GroundClick groundClick=new GroundClick();
     	 gBtn.addMouseListener(groundClick);
     	 this.add(gBtn);
-<<<<<<< HEAD
-=======
     	 JButton run=new JButton("run");
     	 run.setLocation(490,650);
     	 run.setSize(100, 25);
     	 RunClick runClick=new RunClick();
     	 run.addMouseListener(runClick);
     	 this.add(run);
->>>>>>> 4c715a3 (adding current sources)
     	 JLabel panel = new JLabel("Circuits Diagram");
     	 panel.setForeground(Color.WHITE);
     	 panel.setSize(130, 25);
@@ -182,15 +176,13 @@ public class WorkspaceGUI extends JFrame {
        						 {
      							g.drawImage(componentImg, j*25 , i*25,24,24,null);
      					     }
-<<<<<<< HEAD
-	    							 String val=(comp[i][j].getType()=="Resistor")?String.valueOf(comp[i][j].getResistance()+" Ω"):String.valueOf(comp[i][j].getVoltage()+" V");
-=======
+
 	    							 String val=(comp[i][j].getType()=="Resistor")?
 	    							 String.valueOf(comp[i][j].getResistance()+" Ω"):
 	    							 (comp[i][j].getType()=="Current")?
 	    							 String.valueOf(comp[i][j].getCurrent()+" A"):
 	    							 String.valueOf(comp[i][j].getVoltage()+" V");
->>>>>>> 4c715a3 (adding current sources)
+
 	    							 
 	    							 g.setColor(Color.decode("#77bdfb"));
 	    							 Font stringFont = new Font( "SansSerif", Font.PLAIN, 14 );
@@ -329,10 +321,7 @@ public class WorkspaceGUI extends JFrame {
     	 String name="R";
     	 if(selectedComp.getType()=="Resistor")
 			{
-<<<<<<< HEAD
-    		 name="R";
-=======
->>>>>>> 4c715a3 (adding current sources)
+
 				if(vallist.getLast().getText()!=null)
 				{
 					try
@@ -347,10 +336,6 @@ public class WorkspaceGUI extends JFrame {
 				}
 			} else if(selectedComp.getType()=="Voltage")
 			{
-<<<<<<< HEAD
-				name="V";
-=======
->>>>>>> 4c715a3 (adding current sources)
 				if(vallist.get(5).getText()!=null)
 				{
 					try
@@ -363,8 +348,7 @@ public class WorkspaceGUI extends JFrame {
 				{
 					selectedComp.setVoltage(0);
 				}
-<<<<<<< HEAD
-=======
+
 			}else if(selectedComp.getType()=="Current")
 			{
 				if(vallist.get(4).getText()!=null)
@@ -379,7 +363,6 @@ public class WorkspaceGUI extends JFrame {
 				{
 					selectedComp.setCurrent(0);
 				}
->>>>>>> 4c715a3 (adding current sources)
 			}
     	 
     	 if(!vallist.get(1).getText().equals(""))
@@ -531,12 +514,9 @@ public class WorkspaceGUI extends JFrame {
 				{
 					saveVal();
 					selectedComp=comp[curri][currj];
-<<<<<<< HEAD
-					clearVal(null);					setValue();
-=======
+
 					clearVal(null);					
 					setValue();
->>>>>>> 4c715a3 (adding current sources)
 				}else 
 				{
 					component=selectedComp.getType();
@@ -790,11 +770,9 @@ public class WorkspaceGUI extends JFrame {
 		
 		
 	}
-<<<<<<< HEAD
-	public class CurrentClick implements MouseListener
-=======
+
 	public class RunClick implements MouseListener
->>>>>>> 4c715a3 (adding current sources)
+
 	{
 
 		@Override
@@ -840,10 +818,9 @@ public class WorkspaceGUI extends JFrame {
 							   {
 								   nodalAnalysis.setKVLLength();
 								   nodalAnalysis.runKCL();
-<<<<<<< HEAD
-=======
+
 								   nodalAnalysis.creatingMatrix();
->>>>>>> 4c715a3 (adding current sources)
+
 								   nodalAnalysis.getKCL();
 							   }
 						   }else
@@ -894,8 +871,7 @@ public class WorkspaceGUI extends JFrame {
 		}
 		
 	}
-<<<<<<< HEAD
-=======
+
 	public class CurrentClick implements MouseListener
 	{
 
@@ -930,7 +906,6 @@ public class WorkspaceGUI extends JFrame {
 		}
 		
 	}
->>>>>>> 4c715a3 (adding current sources)
 	public class VoltageClick implements MouseListener
 	{
 
@@ -1052,24 +1027,20 @@ public class WorkspaceGUI extends JFrame {
 			 if(selectedComp.getType()!="Resistor")
 			 {
 				 vallist.getLast().disable();
-<<<<<<< HEAD
-			 }else if(selectedComp.getType()!="Voltage")
-=======
+
 			 }
 			 if(selectedComp.getType()!="Voltage")
->>>>>>> 4c715a3 (adding current sources)
+
 			 {
 				 vallist.get(5).disable();;
 				
 			 }
-<<<<<<< HEAD
-=======
+
 			 if(selectedComp.getType()!="Current")
 			 {
 				 vallist.get(4).disable();;
 				
 			 }
->>>>>>> 4c715a3 (adding current sources)
 			 
 			 if(selectedComp.getType()=="Resistor")
 			 {
@@ -1079,13 +1050,12 @@ public class WorkspaceGUI extends JFrame {
 			 {
 				 vallist.get(5).enable();
 				 vallist.get(5).setText(" "+String.valueOf(selectedComp.getVoltage()));
-<<<<<<< HEAD
-=======
+
 			 }else if(selectedComp.getType()=="Current")
 			 {
 				 vallist.get(4).enable();
 				 vallist.get(4).setText(" "+String.valueOf(selectedComp.getCurrent()));
->>>>>>> 4c715a3 (adding current sources)
+
 			 }
 			 
 			 vallist.get(1).setText(selectedComp.getName());
@@ -1105,8 +1075,6 @@ public class WorkspaceGUI extends JFrame {
 		rotate.setLocation(-100,-100);
 		currAngle=0;
 	}
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 4c715a3 (adding current sources)
+
