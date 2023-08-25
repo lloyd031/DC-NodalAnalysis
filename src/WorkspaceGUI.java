@@ -35,11 +35,12 @@ public class WorkspaceGUI extends JFrame {
 	String[] propertyname= {"Type","name","Angle","branch", "current","voltage","Resis..."};
 	LinkedList<JTextField> vallist=new LinkedList<JTextField>();
 	JLabel rotate;
+	JButton run;
 	NodalAnalysis nodalAnalysis=new NodalAnalysis();
 	public WorkspaceGUI()
      { 
 		 this.setTitle("DC-Circuit Analysis");
-    	 this.setSize(1056,714);
+    	 this.setSize(1056,724);
     	 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	 this.setResizable(true);
     	 this.setLocationRelativeTo(null);
@@ -51,33 +52,40 @@ public class WorkspaceGUI extends JFrame {
     	 board.addMouseMotionListener(move);
     	 Click click = new Click();
     	 board.addMouseListener(click);
-    	 JButton voltBtn=new JButton("voltage source");
-    	 voltBtn.setLocation(0,650);
-    	 voltBtn.setSize(130, 25);
+    	 ImageIcon voltIcon = new ImageIcon(getClass().getResource("Voltage0.png"));
+    	 JLabel voltBtn=new JLabel("");
+    	 voltBtn.setLocation(910,35);
+    	 voltBtn.setSize(50, 50);
+    	 voltBtn.setIcon(voltIcon);
     	 this.add(voltBtn);
     	 VoltageClick voltageclick=new VoltageClick();
     	 voltBtn.addMouseListener(voltageclick);
-
-    	 JButton currBtn=new JButton("current source");
-    	 currBtn.setLocation(130,650);
-    	 currBtn.setSize(130, 25);
+    	 ImageIcon currIcon = new ImageIcon(getClass().getResource("Current0.png"));
+    	 JLabel currBtn=new JLabel("vv");
+    	 currBtn.setLocation(980,35);
+    	 currBtn.setSize(50, 50);
+    	 currBtn.setIcon(currIcon);
     	 CurrentClick currClick=new CurrentClick();
     	 currBtn.addMouseListener(currClick);
     	 this.add(currBtn);
-    	 JButton resBtn=new JButton("resistor");
-    	 resBtn.setLocation(260,650);
+    	 JLabel resBtn=new JLabel("");
+    	 resBtn.setLocation(910,130);
     	 resBtn.setSize(130, 25);
+    	 ImageIcon resIcon = new ImageIcon(getClass().getResource("Resistor0.png"));
+    	 resBtn.setIcon(resIcon);
     	 this.add(resBtn);
     	 ResistorClick resistorClick=new ResistorClick();
     	 resBtn.addMouseListener(resistorClick);
-    	 JButton gBtn=new JButton("ground");
-    	 gBtn.setLocation(360,650);
-    	 gBtn.setSize(130, 25);
+    	 JLabel gBtn=new JLabel("");
+    	 ImageIcon gIcon = new ImageIcon(getClass().getResource("ground0.png"));
+    	 gBtn.setLocation(990,130);
+    	 gBtn.setSize(50, 25);
+    	 gBtn.setIcon(gIcon);
     	 GroundClick groundClick=new GroundClick();
     	 gBtn.addMouseListener(groundClick);
     	 this.add(gBtn);
-    	 JButton run=new JButton("run");
-    	 run.setLocation(490,650);
+    	 run=new JButton("run");
+    	 run.setLocation(490,660);
     	 run.setSize(100, 25);
     	 RunClick runClick=new RunClick();
     	 run.addMouseListener(runClick);
@@ -122,7 +130,7 @@ public class WorkspaceGUI extends JFrame {
     	 {
     		 Graphics2D g2d=(Graphics2D)g;
     		 g2d.setColor(Color.decode("#1f1f1f"));
-    		 g2d.fillRect(0, 0,900, 675);
+    		 g2d.fillRect(0, 0,900, 699);
     		 for(int i=0; i<27;i++)
     		 {
     			 for(int j=0; j<36;j++)
@@ -143,7 +151,7 @@ public class WorkspaceGUI extends JFrame {
            							g.drawImage(componentImg, j*25-23 , i*25-50/2+1,50,50,null);
            						 }else
            						 {
-           							g.drawImage(componentImg, j*25 , i*25,24,24,null);
+           							g.drawImage(componentImg, j*25-25/2 , i*25,24,24,null);
            						 }
     							
     							}
@@ -174,27 +182,32 @@ public class WorkspaceGUI extends JFrame {
     							 g.drawImage(componentImg, j*25-24 , i*25-50/2+1,50,50,null);
 							 }else
        						 {
-     							g.drawImage(componentImg, j*25 , i*25,24,24,null);
+     							g.drawImage(componentImg, j*25-25/2 , i*25,24,24,null);
      					     }
-
-	    							 String val=(comp[i][j].getType()=="Resistor")?
-	    							 String.valueOf(comp[i][j].getResistance()+" Ω"):
+                 
+	    							 double val=(comp[i][j].getType()=="Resistor")?
+	    							 comp[i][j].getResistance():
 	    							 (comp[i][j].getType()=="Current")?
-	    							 String.valueOf(comp[i][j].getCurrent()+" A"):
-	    							 String.valueOf(comp[i][j].getVoltage()+" V");
-
-	    							 
+	    							 comp[i][j].getCurrent():
+	    							 comp[i][j].getVoltage();
+	    							 int wholevalue=(int) val;
+	                                 String finalval=(val%1==0)?String.valueOf(wholevalue):String.valueOf(val);
+	    							 char unit =(comp[i][j].getType()=="Resistor")?
+	    	    					 'Ω':
+	    	    				     (comp[i][j].getType()=="Current")?
+	    	    				     'A':
+	    	    				     'V';
 	    							 g.setColor(Color.decode("#77bdfb"));
-	    							 Font stringFont = new Font( "SansSerif", Font.PLAIN, 14 );
+	    							 Font stringFont = new Font( "Arial Rounded MT", Font.ITALIC, 13 );
 	    							 g.setFont(stringFont);
 	    							 if(comp[i][j].getType()!="ground")
 	    							 {
 	    								 if(comp[i][j].getAngle()==0 || comp[i][j].getAngle()==180)
 		    							 {
-		    								 g.drawString(comp[i][j].getName()+" = "+ val, j*25-25, i*25-28);
+		    								 g.drawString(comp[i][j].getName()+" = "+ finalval +" "+unit, j*25-25, i*25-28);
 		    							 }else
 		    							 {
-		    								 g.drawString(comp[i][j].getName()+" = "+ val, j*25+35, i*25+25/2-10);
+		    								 g.drawString(comp[i][j].getName()+" = "+finalval +" "+unit, j*25+35, i*25+25/2-10);
 		    							 }
 	    							 }
 	    							 
@@ -220,7 +233,7 @@ public class WorkspaceGUI extends JFrame {
     		 Font stringFont = new Font( "SansSerif", Font.BOLD, 12 );
     		 g.setFont(stringFont);
     		 g.setColor(Color.decode("#2f2f2f"));
-    		 g.fillRect(900, 455,150, 220);
+    		 g.fillRect(900, 479,150, 220);
     		 g.setColor(Color.decode("#404346"));
     		 g.fillRect(900, 425,150, 30);
     		 g.setColor(Color.decode("#21262d"));
@@ -256,7 +269,7 @@ public class WorkspaceGUI extends JFrame {
     		 g.drawImage(componentImg, 905 , 5,14,14,null);
     		 Font stringFont = new Font( "SansSerif", Font.PLAIN, 14 );
     		 
-    		 for(int i=0; i<complistlayer.size(); i++)
+    		/* for(int i=0; i<complistlayer.size(); i++)
     		 {
     			 g.setColor(Color.white);
     			 if(complistlayer.get(i)==selectedComp)
@@ -274,7 +287,7 @@ public class WorkspaceGUI extends JFrame {
     			 g.fillRect(915, i*20+55, 10 , 1+1/2);
     			 g.fillRect(925, i*20+53, 4, 4);
     			 g.drawString(complistlayer.get(i).getType()+"("+complistlayer.get(i).getName()+")", 940, i*20+60);
-    		 }
+    		 }*/
     	 }
      }
      public void drawComponent(String comp,int compAngle)
@@ -381,154 +394,158 @@ public class WorkspaceGUI extends JFrame {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			if(selectedComp==null)
+			if(curri>1 && currj>1 && curri<26 && currj<35)
 			{
-				if(component!=null)
+				if(selectedComp==null)
 				{
-					if(component!="ground")
+					if(component!=null)
 					{
-						createComponent(curri,currj);
-						clearVal(null);
-						setValue();
-					}else
-					{
-						if(path[curri][currj]!=null)
+						if(component!="ground")
 						{
-							path[curri][currj].getWire().setReference();
 							createComponent(curri,currj);
+							clearVal(null);
+							setValue();
+						}else
+						{
+							if(path[curri][currj]!=null)
+							{
+								path[curri][currj].getWire().setReference();
+								createComponent(curri,currj);
+							}
+						}
+					}else if(component==null)
+					{
+						if(comp[curri][currj]!=null)
+						{
+							selectedComp=comp[curri][currj];
+							clearVal((selectedComp.getType()=="Resistor")?vallist.getLast():vallist.get(4));
+							setValue();
+						}else if(comp[curri][currj-1]!=null && path[curri][currj]==null)
+						{
+							if((comp[curri][currj-1].getAngle()==0 && comp[curri][currj-1].getHead()==null)  || (comp[curri][currj-1].getAngle()==180 && comp[curri][currj-1].getTail()==null))
+							{
+								if(connComp[0]==null)
+								{
+									connComp[0]=comp[curri][currj-1];
+									pol[0]=(comp[curri][currj-1].getAngle()==0)?"head":"tail";
+									originarm='r';
+									setOrigin(currj,curri);
+								}else
+								{
+									if(connComp[0]!=comp[curri][currj-1])
+									{
+										connComp[1]=comp[curri][currj-1];
+										pol[1]=(comp[curri][currj-1].getAngle()==0)?"head":"tail";
+										
+										setTarget(currj,curri);
+										connectComponent(connComp[0],connComp[1]);
+									}
+									
+								}
+							}
+						} else if(comp[curri][currj+1]!=null && path[curri][currj]==null)
+						{
+							if((comp[curri][currj+1].getAngle()==0 && comp[curri][currj+1].getTail()==null)  || (comp[curri][currj+1].getAngle()==180 && comp[curri][currj+1].getHead()==null))
+							{
+								if(connComp[0]==null)
+								{
+									connComp[0]=comp[curri][currj+1];
+									pol[0]=(comp[curri][currj+1].getAngle()==0)?"tail":"head";
+									originarm='l';
+									setOrigin(currj,curri);
+								}else
+								{
+									if(connComp[0]!=comp[curri][currj+1])
+									{
+										connComp[1]=comp[curri][currj+1];
+										pol[1]=(comp[curri][currj+1].getAngle()==0)?"tail":"head";
+										
+										setTarget(currj,curri);
+										connectComponent(connComp[0],connComp[1]);
+									}
+								}
+							}
+						}else if(comp[curri+1][currj]!=null && path[curri][currj]==null)
+						{
+							if((comp[curri+1][currj].getAngle()==90 && comp[curri+1][currj].getHead()==null)  || (comp[curri+1][currj].getAngle()==270 && comp[curri+1][currj].getTail()==null))
+							{
+								if(connComp[0]==null)
+								{
+									connComp[0]=comp[curri+1][currj];
+									pol[0]=(comp[curri+1][currj].getAngle()==90)?"head":"tail";
+									originarm='t';
+									setOrigin(currj,curri);
+								}else
+								{
+									if(connComp[0]!=comp[curri+1][currj])
+									{
+										connComp[1]=comp[curri+1][currj];
+										pol[1]=(comp[curri+1][currj].getAngle()==90)?"head":"tail";
+										setTarget(currj,curri);
+										connectComponent(connComp[0],connComp[1]);
+									}
+								}
+							}
+						}else if(comp[curri-1][currj]!=null && path[curri][currj]==null)
+						{
+							if((comp[curri-1][currj].getAngle()==90 && comp[curri-1][currj].getTail()==null)  || (comp[curri-1][currj].getAngle()==270 && comp[curri-1][currj].getHead()==null))
+							{
+								if(connComp[0]==null)
+								{
+									connComp[0]=comp[curri-1][currj];
+									pol[0]=(comp[curri-1][currj].getAngle()==90)?"tail":"head";
+									originarm='b';
+									setOrigin(currj,curri);
+								}else
+								{
+									if(connComp[0]!=comp[curri-1][currj])
+									{
+										connComp[1]=comp[curri-1][currj];
+										pol[1]=(comp[curri-1][currj].getAngle()==90)?"tail":"head";
+										setTarget(currj,curri);
+										connectComponent(connComp[0],connComp[1]);
+									}  
+									
+								}
+							}
+						}else if(connComp[0]!=null && path[curri][currj]!=null)
+						{
+							targetpath=path[curri][currj];
+							connComp[1]=path[curri][currj].getWire();
+							setTarget(currj,curri);
+							path[curri][currj].setJuction(true);
+							connectComponent(connComp[0],connComp[1]);
+							
 						}
 					}
-				}else if(component==null)
+				}else
 				{
-					if(comp[curri][currj]!=null)
+					if(comp[curri][currj]==null)
 					{
+						saveVal();
+						selectedComp=null;
+						clearVal(null);
+					}else if(comp[curri][currj]!=selectedComp)
+					{
+						saveVal();
 						selectedComp=comp[curri][currj];
-						clearVal((selectedComp.getType()=="Resistor")?vallist.getLast():vallist.get(4));
-						setValue();
-					}else if(comp[curri][currj-1]!=null && path[curri][currj]==null)
-					{
-						if((comp[curri][currj-1].getAngle()==0 && comp[curri][currj-1].getHead()==null)  || (comp[curri][currj-1].getAngle()==180 && comp[curri][currj-1].getTail()==null))
-						{
-							if(connComp[0]==null)
-							{
-								connComp[0]=comp[curri][currj-1];
-								pol[0]=(comp[curri][currj-1].getAngle()==0)?"head":"tail";
-								originarm='r';
-								setOrigin(currj,curri);
-							}else
-							{
-								if(connComp[0]!=comp[curri][currj-1])
-								{
-									connComp[1]=comp[curri][currj-1];
-									pol[1]=(comp[curri][currj-1].getAngle()==0)?"head":"tail";
-									
-									setTarget(currj,curri);
-									connectComponent(connComp[0],connComp[1]);
-								}
-								
-							}
-						}
-					} else if(comp[curri][currj+1]!=null && path[curri][currj]==null)
-					{
-						if((comp[curri][currj+1].getAngle()==0 && comp[curri][currj+1].getTail()==null)  || (comp[curri][currj+1].getAngle()==180 && comp[curri][currj+1].getHead()==null))
-						{
-							if(connComp[0]==null)
-							{
-								connComp[0]=comp[curri][currj+1];
-								pol[0]=(comp[curri][currj+1].getAngle()==0)?"tail":"head";
-								originarm='l';
-								setOrigin(currj,curri);
-							}else
-							{
-								if(connComp[0]!=comp[curri][currj+1])
-								{
-									connComp[1]=comp[curri][currj+1];
-									pol[1]=(comp[curri][currj+1].getAngle()==0)?"tail":"head";
-									
-									setTarget(currj,curri);
-									connectComponent(connComp[0],connComp[1]);
-								}
-							}
-						}
-					}else if(comp[curri+1][currj]!=null && path[curri][currj]==null)
-					{
-						if((comp[curri+1][currj].getAngle()==90 && comp[curri+1][currj].getHead()==null)  || (comp[curri+1][currj].getAngle()==270 && comp[curri+1][currj].getTail()==null))
-						{
-							if(connComp[0]==null)
-							{
-								connComp[0]=comp[curri+1][currj];
-								pol[0]=(comp[curri+1][currj].getAngle()==90)?"head":"tail";
-								originarm='t';
-								setOrigin(currj,curri);
-							}else
-							{
-								if(connComp[0]!=comp[curri+1][currj])
-								{
-									connComp[1]=comp[curri+1][currj];
-									pol[1]=(comp[curri+1][currj].getAngle()==90)?"head":"tail";
-									setTarget(currj,curri);
-									connectComponent(connComp[0],connComp[1]);
-								}
-							}
-						}
-					}else if(comp[curri-1][currj]!=null && path[curri][currj]==null)
-					{
-						if((comp[curri-1][currj].getAngle()==90 && comp[curri-1][currj].getTail()==null)  || (comp[curri-1][currj].getAngle()==270 && comp[curri-1][currj].getHead()==null))
-						{
-							if(connComp[0]==null)
-							{
-								connComp[0]=comp[curri-1][currj];
-								pol[0]=(comp[curri-1][currj].getAngle()==90)?"tail":"head";
-								originarm='b';
-								setOrigin(currj,curri);
-							}else
-							{
-								if(connComp[0]!=comp[curri-1][currj])
-								{
-									connComp[1]=comp[curri-1][currj];
-									pol[1]=(comp[curri-1][currj].getAngle()==90)?"tail":"head";
-									setTarget(currj,curri);
-									connectComponent(connComp[0],connComp[1]);
-								}  
-								
-							}
-						}
-					}else if(connComp[0]!=null && path[curri][currj]!=null)
-					{
-						targetpath=path[curri][currj];
-						connComp[1]=path[curri][currj].getWire();
-						setTarget(currj,curri);
-						path[curri][currj].setJuction(true);
-						connectComponent(connComp[0],connComp[1]);
-						
-					}
-				}
-			}else
-			{
-				if(comp[curri][currj]==null)
-				{
-					saveVal();
-					selectedComp=null;
-					clearVal(null);
-				}else if(comp[curri][currj]!=selectedComp)
-				{
-					saveVal();
-					selectedComp=comp[curri][currj];
 
-					clearVal(null);					
-					setValue();
-				}else 
-				{
-					component=selectedComp.getType();
-					complist.remove(comp[curri][currj]);
-					complistlayer.remove(comp[curri][currj]);
-					comp[curri][currj]=null;
-					
-					selectedComp=null;
+						clearVal(null);					
+						setValue();
+					}else 
+					{
+						component=selectedComp.getType();
+						complist.remove(comp[curri][currj]);
+						complistlayer.remove(comp[curri][currj]);
+						comp[curri][currj]=null;
+						
+						selectedComp=null;
+					}
+					rotate.setLocation(-100,-100);
 				}
-				rotate.setLocation(-100,-100);
+				 
+			
 			}
-			 
 		}
 
 		@Override
@@ -779,70 +796,85 @@ public class WorkspaceGUI extends JFrame {
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
 			//checking for errors
-			if(!complist.isEmpty())
+			if(running==false)
 			{
-				for(Component i: complist) 
+				if(!complist.isEmpty())
 				{
-					if(i.getReference()==true)
+					for(Component i: complist) 
 					{
-						hasground=true;
+						if(i.getReference()==true)
+						{
+							hasground=true;
+						}
+						
+						if((i.getType()=="Voltage" && i.getVoltage()==0) || i.getType()=="Resistor" && i.getResistance()==0)
+						{
+							errormsg.add( i.getType()+"("+i.getName()+") "+"has 0 value ");
+						}
+						if(i.getConnection().size()<2)
+						{
+							errormsg.add("connection incomplete "+ i.getType()+"("+i.getName()+") ");
+						}
 					}
-					
-					if((i.getType()=="Voltage" && i.getVoltage()==0) || i.getType()=="Resistor" && i.getResistance()==0)
-					{
-						errormsg.add( i.getType()+"("+i.getName()+") "+"has 0 value ");
-					}
-					if(i.getConnection().size()<2)
-					{
-						errormsg.add("connection incomplete "+ i.getType()+"("+i.getName()+") ");
-					}
-				}
-				   if(hasground==true && errormsg.isEmpty())
-				   {
-					   nodalAnalysis.setComp(complist);
-					   nodalAnalysis.determineRealNode();
-					   if( nodalAnalysis.getNode().size()==0)
+					   if(hasground==true && errormsg.isEmpty())
 					   {
-						  System.out.println("0 node");
-					   }else
-					   {
-						   nodalAnalysis.creatingBranches();
-						   nodalAnalysis.solvingForTotalVR();
-						   if(nodalAnalysis.getErr()==null)
+						   nodalAnalysis.setComp(complist);
+						   nodalAnalysis.determineRealNode();
+						   if( nodalAnalysis.getNode().size()==0)
 						   {
-							   nodalAnalysis.assignVoltagesToNodes();
-							   if(nodalAnalysis.getErr()!=null)
-							   {
-								   System.out.println(nodalAnalysis.getErr());
-							   }else
-							   {
-								   nodalAnalysis.setKVLLength();
-								   nodalAnalysis.runKCL();
-
-								   nodalAnalysis.creatingMatrix();
-
-								   nodalAnalysis.getKCL();
-							   }
+							  System.out.println("0 node");
 						   }else
 						   {
-							   System.out.println(nodalAnalysis.getErr());
+							   nodalAnalysis.creatingBranches();
+							   nodalAnalysis.solvingForTotalVR();
+							   if(nodalAnalysis.getErr()==null)
+							   {
+								   nodalAnalysis.assignVoltagesToNodes();
+								   if(nodalAnalysis.getErr()!=null)
+								   {
+									   System.out.println(nodalAnalysis.getErr());
+								   }else
+								   {
+									   nodalAnalysis.setKVLLength();
+									   nodalAnalysis.runKCL();
+									   nodalAnalysis.creatingMatrix();
+									   nodalAnalysis.getKCL();
+									   for(Component i:complist)
+									   {
+										   if(i.getType()=="Resistor")
+										   {
+											   i.setCurrent(i.getBranch().getCurrent());
+										   }
+									   }
+									   running=true;
+									   run.setText("end");
+								   }
+							   }else
+							   {
+								   System.out.println(nodalAnalysis.getErr());
+							   }
+							   
 						   }
-						   
-					   }
-				   }else
-				   {
-					   if(hasground==false)
+					   }else
 					   {
-						   System.out.println("reference node: Null");
+						   if(hasground==false)
+						   {
+							   System.out.println("reference node: Null");
+						   }
+						   for(String i:errormsg)
+						   {
+							   System.out.println(i);
+						   }
 					   }
-					   for(String i:errormsg)
-					   {
-						   System.out.println(i);
-					   }
-				   }
+				}else
+				{
+					System.out.println("error: Blank circuit");
+				}
 			}else
 			{
-				System.out.println("error: Blank circuit");
+				nodalAnalysis.reset();
+				running=false;
+				run.setText("run");
 			}
 		}
 
@@ -1060,6 +1092,12 @@ public class WorkspaceGUI extends JFrame {
 			 
 			 vallist.get(1).setText(selectedComp.getName());
 			 vallist.get(2).setText(String.valueOf(" "+selectedComp.getAngle()+" \u00B0"));
+		     if(running==true)
+		     {
+		    	 vallist.get(4).enable();
+		    	 vallist.get(4).setEditable(false);
+		     }
+			 vallist.get(4).setText(String.valueOf(" "+Math.abs(selectedComp.getCurrent())));
 		 }
 	 }
 	

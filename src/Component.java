@@ -11,7 +11,6 @@ public class Component {
    private double constant;
    private int index;
    private String name;
-   private boolean modify=false;
    private int angle;
    Component(String type)
    {

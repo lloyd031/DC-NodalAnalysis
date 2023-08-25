@@ -2,11 +2,13 @@ import java.util.LinkedList;
 
 public class NodalAnalysis {
 	static Component currNode;
-	static double[][] matrix;
+	private double[][] matrix;
+	private double[] constants;
 	static LinkedList<Component> branchlist=new LinkedList<Component>();
 	private LinkedList<Component> node = new LinkedList<Component>();
-	static LinkedList<Component> comp = new LinkedList<Component>();
+	private LinkedList<Component> comp = new LinkedList<Component>();
 	private String errmsg;
+	
 	public NodalAnalysis() {
 		// TODO Auto-generated method stub
 		
@@ -151,6 +153,7 @@ public class NodalAnalysis {
 					{
 						matrix[i][j]=node.get(i).getkvleqn(j);
 					}
+					constants[i]=node.get(i).getConstant();
 				}
 				
 				//printing the matrix
@@ -162,14 +165,23 @@ public class NodalAnalysis {
 						System.out.print(matrix[i][j]+" ");
 					}
 					
-					System.out.println("= "+ node.get(i).getConstant());
+					System.out.println("= "+ constants[i]);
 				}
+				Matrix mat=new Matrix(matrix,constants);
 				
-				//solving for voltages try
+				for(int i=0; i<mat.getResult().length; i++)
+				{
+					node.get(i).setVoltage(mat.getResult()[i]);
+				}
+				for(Component i:branchlist)
+				{
+					i.setCurrent((i.getConnection().getFirst().getVoltage()-i.getVoltage()-i.getConnection().getLast().getVoltage())/i.getResistance());
+				}
+				/*//solving for voltages try
 				if(node.size()==1 && branchlist.size()>1)
 					{
 						System.out.println("= "+node.getFirst().getConstant()/matrix[0][0]);
-					}
+					}*/
 	}
 	//method for creating branches
 	static void createBranch(Component element,Component prev,Component branch)
@@ -210,6 +222,7 @@ public class NodalAnalysis {
 	//creating the matrix
 	void creatingMatrix()
 	{
+		        constants=new double[node.size()];
 				matrix=new double[node.size()][node.size()];
 				for(int i=0; i<node.size();i++)
 				{
@@ -217,6 +230,7 @@ public class NodalAnalysis {
 					{
 						matrix[i][j]=0;
 					}
+					constants[i]=0;
 				}
 	}
 
@@ -273,7 +287,13 @@ public class NodalAnalysis {
 		
 	}
 	
-	
+	//reset
+	 public void reset()
+	 {
+		 
+		 branchlist.clear();
+		 node.clear();
+	 }
 	
 
 }

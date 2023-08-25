@@ -3,7 +3,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class LineWire {
 	private Path target;
