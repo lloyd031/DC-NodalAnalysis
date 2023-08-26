@@ -12,7 +12,6 @@ public class WorkspaceGUI extends JFrame {
 	public Path path[][]=new Path[27][36];
 	public Path targetpath;
 	public LinkedList<Component> complist=new LinkedList<Component>();
-	public LinkedList<Component> complistlayer=new LinkedList<Component>();
 	public int mx=-100;
 	public int my=-100;
 	public boolean running;
@@ -52,7 +51,7 @@ public class WorkspaceGUI extends JFrame {
     	 board.addMouseMotionListener(move);
     	 Click click = new Click();
     	 board.addMouseListener(click);
-    	 ImageIcon voltIcon = new ImageIcon(getClass().getResource("Voltage0.png"));
+    	 ImageIcon voltIcon = new ImageIcon(getClass().getResource("voltbtnicon.png"));
     	 JLabel voltBtn=new JLabel("");
     	 voltBtn.setLocation(910,35);
     	 voltBtn.setSize(50, 50);
@@ -60,8 +59,8 @@ public class WorkspaceGUI extends JFrame {
     	 this.add(voltBtn);
     	 VoltageClick voltageclick=new VoltageClick();
     	 voltBtn.addMouseListener(voltageclick);
-    	 ImageIcon currIcon = new ImageIcon(getClass().getResource("Current0.png"));
-    	 JLabel currBtn=new JLabel("vv");
+    	 ImageIcon currIcon = new ImageIcon(getClass().getResource("currbtnicon.png"));
+    	 JLabel currBtn=new JLabel("");
     	 currBtn.setLocation(980,35);
     	 currBtn.setSize(50, 50);
     	 currBtn.setIcon(currIcon);
@@ -69,16 +68,16 @@ public class WorkspaceGUI extends JFrame {
     	 currBtn.addMouseListener(currClick);
     	 this.add(currBtn);
     	 JLabel resBtn=new JLabel("");
-    	 resBtn.setLocation(910,130);
-    	 resBtn.setSize(130, 25);
-    	 ImageIcon resIcon = new ImageIcon(getClass().getResource("Resistor0.png"));
+    	 resBtn.setLocation(910,100);
+    	 resBtn.setSize(50, 25);
+    	 ImageIcon resIcon = new ImageIcon(getClass().getResource("resbtnicon.png"));
     	 resBtn.setIcon(resIcon);
     	 this.add(resBtn);
     	 ResistorClick resistorClick=new ResistorClick();
     	 resBtn.addMouseListener(resistorClick);
     	 JLabel gBtn=new JLabel("");
     	 ImageIcon gIcon = new ImageIcon(getClass().getResource("ground0.png"));
-    	 gBtn.setLocation(990,130);
+    	 gBtn.setLocation(990,100);
     	 gBtn.setSize(50, 25);
     	 gBtn.setIcon(gIcon);
     	 GroundClick groundClick=new GroundClick();
@@ -90,7 +89,7 @@ public class WorkspaceGUI extends JFrame {
     	 RunClick runClick=new RunClick();
     	 run.addMouseListener(runClick);
     	 this.add(run);
-    	 JLabel panel = new JLabel("Circuits Diagram");
+    	 JLabel panel = new JLabel("Components");
     	 panel.setForeground(Color.WHITE);
     	 panel.setSize(130, 25);
     	 panel.setLocation(925,1+1/5);
@@ -536,7 +535,6 @@ public class WorkspaceGUI extends JFrame {
 					{
 						component=selectedComp.getType();
 						complist.remove(comp[curri][currj]);
-						complistlayer.remove(comp[curri][currj]);
 						comp[curri][currj]=null;
 						
 						selectedComp=null;
@@ -743,7 +741,6 @@ public class WorkspaceGUI extends JFrame {
 				if(component!="ground")
 				{
 					complist.add(c);
-					complistlayer.add(c);
 				}
 				selectedComp=c;
 				saveVal();

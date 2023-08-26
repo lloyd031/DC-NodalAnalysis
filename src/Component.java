@@ -87,6 +87,11 @@ public class Component {
   {
 	  this.current=current;
   }
+  void reset()
+  {
+	  this.constant=0;
+	  
+  }
   double getCurrent()
   {
 	  return this.current;
@@ -146,6 +151,7 @@ public class Component {
   {
 	  eqn.add(element);
   }
+  
   void setIndex(int i)
   {
 	  this.index=i;
@@ -190,7 +196,7 @@ public class Component {
   {
 	  return this.outElement;  
   }*/
-
+  
   void kcl()
   {
 	  for(Component i:eqn)

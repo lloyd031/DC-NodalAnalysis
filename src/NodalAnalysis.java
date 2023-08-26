@@ -175,7 +175,9 @@ public class NodalAnalysis {
 				}
 				for(Component i:branchlist)
 				{
-					i.setCurrent((i.getConnection().getFirst().getVoltage()-i.getVoltage()-i.getConnection().getLast().getVoltage())/i.getResistance());
+				    double curr =(i.getConnection().getFirst().getVoltage()-i.getVoltage()-i.getConnection().getLast().getVoltage())/i.getResistance();
+					i.setCurrent(Math.round(curr * 10000)/10000.0d);
+				    
 				}
 				/*//solving for voltages try
 				if(node.size()==1 && branchlist.size()>1)
@@ -291,8 +293,13 @@ public class NodalAnalysis {
 	 public void reset()
 	 {
 		 
+		 
 		 branchlist.clear();
-		 node.clear();
+		 for(Component i:node)
+		 {
+		     i.reset();
+			 node.remove(i);
+		 }
 	 }
 	
 
