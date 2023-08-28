@@ -91,6 +91,7 @@ public class Component {
   {
 	  this.constant=0;
 	  
+	  
   }
   double getCurrent()
   {

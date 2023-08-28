@@ -292,14 +292,24 @@ public class NodalAnalysis {
 	//reset
 	 public void reset()
 	 {
-		 
-		 
 		 branchlist.clear();
-		 for(Component i:node)
+		 for(Component i:comp)
 		 {
-		     i.reset();
+			 if(i.getType()!="Voltage")
+			 {
+				 i.setVoltage(0);
+			 }
+			 i.setBranch(null);
+			 
+		 }
+		 for(Component i: node)
+		 {
+			 i.reset();
+			 i.setkvllength(0);
 			 node.remove(i);
 		 }
+		 constants=new double[0];
+		 matrix=new double[0][0];
 	 }
 	
 
