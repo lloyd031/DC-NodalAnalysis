@@ -37,8 +37,11 @@ public class WorkspaceGUI extends JFrame {
 	JLabel run;
 	NodalAnalysis nodalAnalysis=new NodalAnalysis();
 	ImageIcon runIcon;
+	Summary summary;
+	final Rectangle bounds;
 	public WorkspaceGUI()
      { 
+		
 		 this.setTitle("DC-Circuit Analysis");
     	 this.setSize(1056,724);
     	 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -142,7 +145,7 @@ public class WorkspaceGUI extends JFrame {
     	 rotateClick rclick= new rotateClick();
     	 rotate.addMouseListener(rclick);
     	 this.add(rotate);
-    	 
+    	 bounds=this.getBounds();
      }
      
      public class BreadBoard extends JPanel
@@ -820,14 +823,7 @@ public class WorkspaceGUI extends JFrame {
     {
     	nodalAnalysis.reset();
 		running=false;
-		for(Component i:complist)
-		{
-			if(i.getType()=="Resistor")
-			{
-				i.setCurrent(0);
-			}
-		}
-		run.setText("run");
+		
     }
 	public class RunClick implements MouseListener
 
@@ -888,13 +884,20 @@ public class WorkspaceGUI extends JFrame {
 									   nodalAnalysis.getKCL();
 									   for(Component i:complist)
 									   {
-										   if(i.getBranch()!=null)
+										   if(i.getBranch()!=null && i.getType()!="Current")
 										   {
 											   i.setCurrent(i.getBranch().getCurrent());
+											   if(i.getType()=="Resistor")
+											    {
+											    	double volt=i.getCurrent()*i.getResistance();
+											    	i.setVoltage(Math.round(volt * 10000)/10000.0d);
+											    }
 										   }
 									   }
 									   running=true;
-									   Summary summary=new Summary();
+									   summary=new Summary(complist);
+									   
+									   summary.setLocation(bounds.x,bounds.y+bounds.height-150);
 									   summary.show();
 								   }
 							   }else
@@ -923,6 +926,7 @@ public class WorkspaceGUI extends JFrame {
 			}else
 			{
 				end();
+				summary.dispose();
 			}
 			if(running==false)
 			{
@@ -933,6 +937,7 @@ public class WorkspaceGUI extends JFrame {
 			}
 			runIcon = new ImageIcon(getClass().getResource(runicon));
 	    	run.setIcon(runIcon);
+	    	;
 		}
 
 		@Override

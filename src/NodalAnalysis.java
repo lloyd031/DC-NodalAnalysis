@@ -8,7 +8,7 @@ public class NodalAnalysis {
 	private LinkedList<Component> node = new LinkedList<Component>();
 	private LinkedList<Component> comp = new LinkedList<Component>();
 	private String errmsg;
-	
+	Matrix mat;
 	public NodalAnalysis() {
 		// TODO Auto-generated method stub
 		
@@ -167,8 +167,7 @@ public class NodalAnalysis {
 					
 					System.out.println("= "+ constants[i]);
 				}
-				Matrix mat=new Matrix(matrix,constants);
-				
+				mat=new Matrix(matrix,constants);
 				for(int i=0; i<mat.getResult().length; i++)
 				{
 					node.get(i).setVoltage(mat.getResult()[i]);
@@ -176,7 +175,7 @@ public class NodalAnalysis {
 				for(Component i:branchlist)
 				{
 				    double curr =(i.getConnection().getFirst().getVoltage()-i.getVoltage()-i.getConnection().getLast().getVoltage())/i.getResistance();
-					i.setCurrent(Math.round(curr * 10000)/10000.0d);
+				    i.setCurrent(Math.round(curr * 10000)/10000.0d);
 				    
 				}
 				/*//solving for voltages try
@@ -292,16 +291,22 @@ public class NodalAnalysis {
 	//reset
 	 public void reset()
 	 {
-		 branchlist.clear();
+		 
+		 
 		 for(Component i:comp)
 		 {
 			 if(i.getType()!="Voltage")
 			 {
 				 i.setVoltage(0);
 			 }
+			 if(i.getType()!="Current")
+			 {
+				 i.setCurrent(0);
+			 }
 			 i.setBranch(null);
 			 
 		 }
+		 branchlist.clear();
 		 for(Component i: node)
 		 {
 			 i.reset();
@@ -310,6 +315,7 @@ public class NodalAnalysis {
 		 }
 		 constants=new double[0];
 		 matrix=new double[0][0];
+		 mat.reset();
 	 }
 	
 

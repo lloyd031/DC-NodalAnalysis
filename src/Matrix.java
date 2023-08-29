@@ -3,10 +3,11 @@
 public class Matrix {
 	double mat[][]; double constants[];
 	double res[];
+	 int n;
 	public Matrix(double mat[][], double constants[]) {
 		// TODO Auto-generated method stub
 	
-       int n=constants.length;
+       n=constants.length;
        this.mat=new double[n][n];
        this.constants=new double[n];
        for(int i =0;i<n;i++)
@@ -92,6 +93,13 @@ public class Matrix {
 	double[] getResult()
 	{
 		return this.res;
+	}
+	public void reset()
+	{
+		
+				mat=null;
+			    constants=null;
+		 
 	}
     
 }
