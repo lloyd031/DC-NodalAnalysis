@@ -313,6 +313,7 @@ public class NodalAnalysis {
 			 i.setkvllength(0);
 			 node.remove(i);
 		 }
+		 
 		 constants=new double[0];
 		 matrix=new double[0][0];
 		 mat.reset();

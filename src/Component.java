@@ -8,7 +8,7 @@ public class Component {
    private LinkedList<Component> eqn=new LinkedList<Component>();
    private Component head,tail,branch;
    private double[] kvleqn;
-   private double constant;
+   private double constant=0;
    private int index;
    private String name;
    private int angle;
@@ -90,8 +90,8 @@ public class Component {
   void reset()
   {
 	  this.constant=0;
-	  
-	  
+	  this.kvleqn=null;
+	  this.eqn.clear();
   }
   double getCurrent()
   {
