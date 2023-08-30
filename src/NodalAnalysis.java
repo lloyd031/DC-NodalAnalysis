@@ -306,16 +306,14 @@ public class NodalAnalysis {
 			 i.setBranch(null);
 			 
 		 }
-		 branchlist.clear();
 		 for(Component i: node)
 		 {
 			 i.reset();
-			 i.setkvllength(0);
-			 node.remove(i);
 		 }
-		 
-		 constants=new double[0];
-		 matrix=new double[0][0];
+		 node.removeAll(node);
+		 branchlist.clear();
+		 constants=null;
+		 matrix=null;
 		 mat.reset();
 	 }
 	
